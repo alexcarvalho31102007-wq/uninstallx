@@ -566,7 +566,6 @@ fun UninstalledAppsTab(viewModel: MainViewModel) {
     val uninstalledApps by viewModel.uninstalledApps.collectAsStateWithLifecycle()
     val selectedPackages by viewModel.selectedPackageNames.collectAsStateWithLifecycle()
     var selectedSearchQuery by remember { mutableStateOf("") }
-    var showClearTrashConfirmation by remember { mutableStateOf(false) }
     
     val filteredUninstalled = remember(uninstalledApps, selectedPackages, selectedSearchQuery) {
         uninstalledApps
@@ -650,18 +649,6 @@ fun UninstalledAppsTab(viewModel: MainViewModel) {
                             modifier = Modifier.size(18.dp)
                         )
                     }
-
-                    IconButton(
-                        onClick = { showClearTrashConfirmation = true },
-                        modifier = Modifier.size(32.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_delete_sweep),
-                            contentDescription = "Esvaziar Lixeira",
-                            tint = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.size(18.dp)
-                        )
-                    }
                 }
             }
         }
@@ -708,50 +695,5 @@ fun UninstalledAppsTab(viewModel: MainViewModel) {
                 }
             }
         }
-    }
-
-    if (showClearTrashConfirmation) {
-        AlertDialog(
-            onDismissRequest = { showClearTrashConfirmation = false },
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            icon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_trash),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.size(26.dp)
-                )
-            },
-            title = {
-                Text(
-                    text = "Esvaziar Lixeira",
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            },
-            text = {
-                Text(
-                    text = "Deseja remover todos os registros do histórico da lixeira? Esta ação limpa a visualização dos aplicativos desinstalados no histórico do UninstallX.",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        viewModel.clearAllTrash()
-                        showClearTrashConfirmation = false
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
-                ) {
-                    Text("Esvaziar")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showClearTrashConfirmation = false }) {
-                    Text("Cancelar")
-                }
-            },
-            shape = RoundedCornerShape(20.dp)
-        )
     }
 }

@@ -145,22 +145,6 @@ fun AppListItem(
                             )
                         }
                     }
-
-                    // Badge de aplicativo do sistema
-                    if (app.isSystemApp) {
-                        Surface(
-                            shape = RoundedCornerShape(6.dp),
-                            color = MaterialTheme.colorScheme.surfaceVariant
-                        ) {
-                            Text(
-                                text = "Sistema",
-                                style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp),
-                                fontWeight = FontWeight.Normal,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
-                                modifier = Modifier.padding(horizontal = 4.5.dp, vertical = 1.dp)
-                            )
-                        }
-                    }
                 }
 
                 Spacer(modifier = Modifier.height(2.dp))
